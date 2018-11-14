@@ -1,0 +1,47 @@
+<div class="container">
+  <h1>{{title}}</h1>
+  <button id="new" *ngIf="showNewForm == false" (click)="newForm()" class="waves-effect waves-dark pink accent-1 btn">Submit a Cake</button>
+  <div class="carousel cakeCarousel">
+    <button type="button"  *ngFor="let item of cakes" class="carousel-item" (click)="getCake(item._id)"><h5 class="cakeTitle">{{item.title}}</h5><img src="{{item.url}}" alt="Cake Picture Here"></button>
+  </div>
+  <div class="thisCake" *ngIf="showCake == true" >
+    <img class="formImg" src="{{singleCake.url}}" alt="Cake Picture Here">
+    <h5 class="cakeTitle">{{singleCake.title}}</h5>
+    <p><b>Rating Average: </b>{{cakeAvg}}</p>
+    <div id="ratings" *ngFor="let grade of singleCake.ratings">
+      <p><b>Comment: </b>{{grade.comment}}</p>
+      <p><b>Rating: </b>{{grade.rating}}</p>
+    </div>
+    <button type="button" (click)="ratingForm(singleCake._id)" class="waves-effect waves-dark pink accent-1 btn">Rate this cake</button>
+  </div>
+  <div class="thisCake" *ngIf="showNewForm == true">
+    <form id="newCake" (submit)="newCake()">
+      <h5 class="cakeTitle">New Cake</h5>
+      <div class="input-field">
+        <input id="title" type="text" name="newInput.title" [(ngModel)]="newInput.title">
+        <label for="title">Name</label>
+      </div>
+      <div class="input-field">
+        <input id="image" type="text" name="newInput.url" [(ngModel)]="newInput.url">
+        <label for="image">Image Url</label>
+      </div>
+      <button type="submit" class="waves-effect waves-dark pink accent-1 btn">Submit Cake</button>
+    </form>
+  </div>
+  <div class="thisCake" *ngIf="showRatingForm == true" >
+    <form (submit)="rateCakeById(singleCake._id)">
+      <img class="formImg" src="{{singleCake.url}}" alt="Cake Picture Here">
+      <h5 class="cakeTitle">{{singleCake.title}}</h5>
+      <div class="input-field">
+        <textarea id="comment" class="materialize-textarea" name="newRating.comment" [(ngModel)]="newRating.comment"></textarea>
+        <label for="comment">Comment</label>
+      </div>
+      <div class="input-field">
+        <input id="rating" type="number" name="newRating.rating" [(ngModel)]="newRating.rating" min="1" max="5">
+        <label for="rating">Rating </label>
+      </div>
+      <button type="submit" class="waves-effect waves-dark pink accent-1 btn">Rate a Cake</button>
+    </form>
+  </div>
+
+</div>
